@@ -7,16 +7,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id        Int      @id @default(autoincrement())
-  name      String?
+  firstName      String?
+  lastName       String?
+  userName       String?
+  email          String?  @unique
+  hash           String? 
+  @@map("users")
 }
 
-model measuredThrows {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  disc        String?
-  color       String?
-  throwtype   String?
-  distance    Int
-}
+// model measuredThrows {
+//   id          Int      @id @default(autoincrement())
+//   createdAt   DateTime @default(now())
+//   disc        String?
+//   color       String?
+//   throwtype   String?
+//   distance    Int
+//   userId      Int
+//   user Users @relation(fields: [userId], references: [id])
+
+//   @@map("measuredThrows")
+// }
