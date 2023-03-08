@@ -14,18 +14,20 @@ model Users {
   userName       String?
   email          String?  @unique
   hash           String? 
+
+  measuredThrows  measuredThrows[]
   @@map("users")
 }
 
-// model measuredThrows {
-//   id          Int      @id @default(autoincrement())
-//   createdAt   DateTime @default(now())
-//   disc        String?
-//   color       String?
-//   throwtype   String?
-//   distance    Int
-//   userId      Int
-//   user Users @relation(fields: [userId], references: [id])
+model measuredThrows {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  disc        String?
+  color       String?
+  throwtype   String?
+  distance    Int
+  userId      Int
+  user Users @relation(fields: [userId], references: [id])
 
-//   @@map("measuredThrows")
-// }
+  @@map("measuredThrows")
+}
