@@ -1,4 +1,5 @@
 import { Controller, Get, Post } from '@nestjs/common';
+import { GetUser } from 'src/auth/decorator';
 import { MeasureThrowsService } from './measure-throws.service';
 
 @Controller('measure-throws')
@@ -10,8 +11,8 @@ export class MeasureThrowsController {
     return this.measureThrowsService.getMeasuredThrows();
   }
 
-  @Post()
-  createMeasuredThrows() {
-    return this.measureThrowsService.createMeasuredThrow();
-  }
+  //   @Post()
+  //   createMeasuredThrow(@GetUser()) {
+  //     return this.measureThrowsService.createMeasuredThrow();
+  //   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { MeasuredThrowsDto } from './dto';
 // import { GetUser } from 'src/auth/decorator';
 
 @Injectable()
@@ -10,7 +11,13 @@ export class MeasureThrowsService {
     return 'msg: you have retrieved a measured throw';
   }
 
-  createMeasuredThrow() {
-    return 'msg: you successfully created a measured throw';
+  async createMeasuredThrow(userId: number, dto: MeasuredThrowsDto) {
+    const measuredThrow = await this.prisma.measuredThrows.create({
+      data: {
+        userId,
+        ...dto,
+      },
+    });
+    return measuredThrow;
   }
 }
