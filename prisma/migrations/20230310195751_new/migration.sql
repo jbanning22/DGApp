@@ -17,7 +17,7 @@ CREATE TABLE "measuredThrows" (
     "disc" TEXT,
     "color" TEXT,
     "throwtype" TEXT,
-    "distance" INTEGER NOT NULL,
+    "distance" TEXT,
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "measuredThrows_pkey" PRIMARY KEY ("id")

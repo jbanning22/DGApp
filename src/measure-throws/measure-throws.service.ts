@@ -12,7 +12,7 @@ export class MeasureThrowsService {
   }
 
   async createMeasuredThrow(userId: number, dto: MeasuredThrowsDto) {
-    const measuredThrow = await this.prisma.measuredThrows.create({
+    const measuredThrow = await this.prisma.measuredThrow.create({
       data: {
         userId,
         ...dto,
