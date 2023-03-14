@@ -23,7 +23,6 @@ export class MeasureThrowsController {
 
   @Get()
   getMeasuredThrows(@GetUser('id') userId: number) {
-    console.log('userId in controller:', userId);
     return this.measureThrowsService.getMeasuredThrows(userId);
   }
 

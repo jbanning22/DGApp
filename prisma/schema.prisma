@@ -9,25 +9,41 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
+
   firstName      String?
   lastName       String?
   userName       String?
+
   email          String  @unique
   hash           String 
 
   measuredThrows  measuredThrow[]
+  rounds         Rounds[]
   @@map("users")
 }
 
 model measuredThrow {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
+
   disc        String
   color       String?
   throwtype   String?
   distance    String
+
   userId      Int
   user User @relation(fields: [userId], references: [id])
 
   @@map("measuredThrows")
 }
+
+// model Rounds {
+//     id          Int @id @default(autoincrement())
+//     createdAt   DateTime @default(now())
+
+//     courseName  String?
+//     scoreCard   Json?   
+
+//     playerId    Int 
+//     player  User  @relation(fields: [playerId], references: [id])
+// }

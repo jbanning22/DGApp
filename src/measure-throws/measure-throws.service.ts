@@ -8,7 +8,6 @@ export class MeasureThrowsService {
   constructor(private prisma: PrismaService) {}
 
   getMeasuredThrows(userId: number) {
-    console.log('userId in service: ', userId);
     return this.prisma.measuredThrow.findMany({
       where: {
         userId,
