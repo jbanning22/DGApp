@@ -4,6 +4,7 @@ import * as pactum from 'pactum';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { AuthDto } from '../src/auth/dto/auth.dto';
 import { AppModule } from './../src/app.module';
+import { MeasuredThrowsDto } from '../src/measure-throws/dto/measureThrow.dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -34,7 +35,7 @@ describe('App e2e', () => {
 
   describe('Auth', () => {
     const dto: AuthDto = {
-      email: 'jake2@gmail.com',
+      email: 'jack2@gmail.com',
       password: 'password',
     };
     describe('Signup', () => {
@@ -110,6 +111,39 @@ describe('App e2e', () => {
             })
             .expectStatus(200)
             .expectBodyContains(dto.email);
+        });
+      });
+    });
+
+    describe('Measured Throws', () => {
+      describe('Get empty throws', () => {
+        it('should get throws', () => {
+          return pactum
+            .spec()
+            .get('/measure-throws')
+            .withHeaders({
+              Authorization: 'Bearer $S{userAt}',
+            })
+            .expectStatus(200);
+          // .expectBody([]);
+        });
+      });
+
+      describe('Create throw', () => {
+        const dto: MeasuredThrowsDto = {
+          disc: 'Boss',
+          distance: '450',
+        };
+        it('should create throw', () => {
+          return pactum
+            .spec()
+            .post('/measure-throws')
+            .withHeaders({
+              Authorization: 'Bearer $S{userAt}',
+            })
+            .withBody(dto)
+            .expectStatus(201);
+          // .stores('throwId', 'id');
         });
       });
     });

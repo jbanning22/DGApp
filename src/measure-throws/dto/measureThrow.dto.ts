@@ -9,7 +9,7 @@ export class MeasuredThrowsDto {
   @IsOptional()
   throwtype?: string;
 
-  @IsNotEmpty()
+  @IsString()
   @IsString()
   distance: string;
 

@@ -12,8 +12,8 @@ model User {
   firstName      String?
   lastName       String?
   userName       String?
-  email          String?  @unique
-  hash           String? 
+  email          String  @unique
+  hash           String 
 
   measuredThrows  measuredThrow[]
   @@map("users")
@@ -22,10 +22,10 @@ model User {
 model measuredThrow {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
-  disc        String?
+  disc        String
   color       String?
   throwtype   String?
-  distance    String?
+  distance    String
   userId      Int
   user User @relation(fields: [userId], references: [id])
 

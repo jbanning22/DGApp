@@ -4,8 +4,8 @@ CREATE TABLE "users" (
     "firstName" TEXT,
     "lastName" TEXT,
     "userName" TEXT,
-    "email" TEXT,
-    "hash" TEXT,
+    "email" TEXT NOT NULL,
+    "hash" TEXT NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -14,10 +14,10 @@ CREATE TABLE "users" (
 CREATE TABLE "measuredThrows" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "disc" TEXT,
+    "disc" TEXT NOT NULL,
     "color" TEXT,
     "throwtype" TEXT,
-    "distance" TEXT,
+    "distance" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "measuredThrows_pkey" PRIMARY KEY ("id")

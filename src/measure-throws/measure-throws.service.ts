@@ -1,14 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { MeasuredThrowsDto } from './dto';
+import { MeasuredThrowsDto, EditThrowById } from './dto';
 // import { GetUser } from 'src/auth/decorator';
 
 @Injectable()
 export class MeasureThrowsService {
   constructor(private prisma: PrismaService) {}
 
-  getMeasuredThrows() {
-    return 'msg: you have retrieved a measured throw';
+  getMeasuredThrows(userId: number) {
+    console.log('userId in service: ', userId);
+    return this.prisma.measuredThrow.findMany({
+      where: {
+        userId,
+      },
+    });
+  }
+
+  getThrowsById(userId: number, throwId: number) {
+    return this.prisma.measuredThrow.findFirst({
+      where: {
+        id: throwId,
+        userId,
+      },
+    });
   }
 
   async createMeasuredThrow(userId: number, dto: MeasuredThrowsDto) {
@@ -19,5 +33,42 @@ export class MeasureThrowsService {
       },
     });
     return measuredThrow;
+  }
+
+  async editThrowById(userId: number, throwId: number, dto: EditThrowById) {
+    const measuredThrow = await this.prisma.measuredThrow.findUnique({
+      where: {
+        id: throwId,
+      },
+    });
+
+    if (!measuredThrow || measuredThrow.userId !== userId)
+      throw new ForbiddenException('Access to resource denied');
+
+    return this.prisma.measuredThrow.update({
+      where: {
+        id: throwId,
+      },
+      data: {
+        ...dto,
+      },
+    });
+  }
+
+  async deleteThrowById(userId: number, throwId: number) {
+    const measuredThrow = await this.prisma.measuredThrow.findUnique({
+      where: {
+        id: throwId,
+      },
+    });
+
+    if (!measuredThrow || measuredThrow.userId !== userId)
+      throw new ForbiddenException('Access to resources denied');
+
+    await this.prisma.measuredThrow.delete({
+      where: {
+        id: throwId,
+      },
+    });
   }
 }
