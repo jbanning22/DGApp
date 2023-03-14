@@ -5,10 +5,17 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { MeasureThrowsModule } from './measure-throws/measure-throws.module';
-import { RoundsModule } from './rounds/rounds.module';
+// import { RoundsModule } from './rounds/rounds.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule, UserModule, PrismaModule, MeasureThrowsModule, RoundsModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    AuthModule,
+    UserModule,
+    MeasureThrowsModule,
+    PrismaModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

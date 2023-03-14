@@ -5,6 +5,7 @@ import { PrismaService } from '../src/prisma/prisma.service';
 import { AuthDto } from '../src/auth/dto/auth.dto';
 import { AppModule } from './../src/app.module';
 import { MeasuredThrowsDto } from '../src/measure-throws/dto/measureThrow.dto';
+// import { EditUserDto } from '../src/user/dto/edit-user-dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -100,51 +101,68 @@ describe('App e2e', () => {
           .stores('userAt', 'access_token');
       });
     });
-    describe('User', () => {
-      describe('Get Me', () => {
-        it('should get current user', () => {
-          return pactum
-            .spec()
-            .get('/users/me')
-            .withHeaders({
-              Authorization: 'Bearer $S{userAt}',
-            })
-            .expectStatus(200)
-            .expectBodyContains(dto.email);
-        });
+  });
+  describe('User', () => {
+    describe('Get Me', () => {
+      it('should get current user', () => {
+        return pactum
+          .spec()
+          .get('/users/me')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200);
       });
     });
 
-    describe('Measured Throws', () => {
-      describe('Get empty throws', () => {
-        it('should get throws', () => {
-          return pactum
-            .spec()
-            .get('/measure-throws')
-            .withHeaders({
-              Authorization: 'Bearer $S{userAt}',
-            })
-            .expectStatus(200);
-          // .expectBody([]);
-        });
-      });
+    // describe('Edit User', () => {
+    //   it('should edit user', () => {
+    //     const dto: EditUserDto = {
+    //       firstName: 'Jake',
+    //       email: 'jake@gmail.com',
+    //     };
+    //     return pactum
+    //       .spec()
+    //       .patch('/users')
+    //       .withHeaders({
+    //         Authorization: 'Bearer $S{userAt}',
+    //       })
+    //       .expectStatus(200)
+    //       .expectBodyContains(dto.firstName)
+    //       .expectBodyContains(dto.email);
+    //   });
+    // });
+  });
 
-      describe('Create throw', () => {
-        const dto: MeasuredThrowsDto = {
-          disc: 'Boss',
-          distance: '450',
-        };
-        it('should create throw', () => {
-          return pactum
-            .spec()
-            .post('/measure-throws')
-            .withHeaders({
-              Authorization: 'Bearer $S{userAt}',
-            })
-            .withBody(dto)
-            .expectStatus(201);
-          // .stores('throwId', 'id');
-        });
+  describe('Measured Throws', () => {
+    describe('Get empty throws', () => {
+      it('should get throws', () => {
+        return pactum
+          .spec()
+          .get('/measure-throws')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBody([]);
+      });
+    });
+
+    describe('Create throw', () => {
+      const dto: MeasuredThrowsDto = {
+        disc: 'Boss',
+        distance: '450',
+      };
+      it('should create throw', () => {
+        return pactum
+          .spec()
+          .post('/measure-throws')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(201)
+          .stores('throwId', 'id');
       });
     });
   });
