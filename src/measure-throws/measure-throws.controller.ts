@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { JwtGuard } from '../auth/guards/jwt.guard';
 import { GetUser } from '../auth/decorator/get-user.decorator';
-import { MeasuredThrowsDto, EditThrowById } from './dto';
+import { MeasuredThrowsDto, EditThrowDto } from './dto';
 import { MeasureThrowsService } from './measure-throws.service';
 
 @UseGuards(JwtGuard)
@@ -27,7 +27,7 @@ export class MeasureThrowsController {
   }
 
   @Get(':id')
-  getThrowssById(
+  getThrowsById(
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) throwId: number,
   ) {
@@ -46,7 +46,7 @@ export class MeasureThrowsController {
   editThrowById(
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) throwId: number,
-    @Body() dto: EditThrowById,
+    @Body() dto: EditThrowDto,
   ) {
     return this.measureThrowsService.editThrowById(userId, throwId, dto);
   }

@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { MeasuredThrowsDto, EditThrowById } from './dto';
+import { MeasuredThrowsDto, EditThrowDto } from './dto';
 // import { GetUser } from 'src/auth/decorator';
 
 @Injectable()
@@ -34,7 +34,7 @@ export class MeasureThrowsService {
     return measuredThrow;
   }
 
-  async editThrowById(userId: number, throwId: number, dto: EditThrowById) {
+  async editThrowById(userId: number, throwId: number, dto: EditThrowDto) {
     const measuredThrow = await this.prisma.measuredThrow.findUnique({
       where: {
         id: throwId,

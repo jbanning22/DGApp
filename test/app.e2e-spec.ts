@@ -6,6 +6,7 @@ import { AuthDto } from '../src/auth/dto/auth.dto';
 import { AppModule } from './../src/app.module';
 import { MeasuredThrowsDto } from '../src/measure-throws/dto/measureThrow.dto';
 import { EditUserDto } from '../src/user/dto/edit-user-dto';
+import { EditThrowDto } from '../src/measure-throws/dto/edit-measured-throw.dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -164,6 +165,40 @@ describe('App e2e', () => {
           .withBody(dto)
           .expectStatus(201)
           .stores('throwId', 'id');
+      });
+    });
+
+    describe('Get throw by id', () => {
+      it('should get throw by id', () => {
+        return pactum
+          .spec()
+          .get('/measure-throws/{id}')
+          .withPathParams('id', '$S{throwId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBodyContains('$S{throwId}');
+      });
+    });
+
+    describe('Edit throw by id', () => {
+      const dto: EditThrowDto = {
+        throwtype: 'roller',
+        distance: '500',
+      };
+      it('should edit throw', () => {
+        return pactum
+          .spec()
+          .patch('/measure-throws/{id}')
+          .withPathParams('id', '$S{throwId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(200)
+          .expectBodyContains(dto.distance)
+          .expectBodyContains(dto.throwtype);
       });
     });
   });

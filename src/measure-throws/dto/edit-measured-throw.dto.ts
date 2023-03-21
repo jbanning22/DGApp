@@ -1,13 +1,13 @@
-import { IsInt, IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
-export class EditThrowById {
+export class EditThrowDto {
   @IsString()
   @IsOptional()
   disc?: string;
 
   @IsString()
-  @IsString()
-  distance: string;
+  @IsOptional()
+  distance?: string;
 
   @IsString()
   @IsOptional()
