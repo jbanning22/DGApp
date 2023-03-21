@@ -5,7 +5,7 @@ import { PrismaService } from '../src/prisma/prisma.service';
 import { AuthDto } from '../src/auth/dto/auth.dto';
 import { AppModule } from './../src/app.module';
 import { MeasuredThrowsDto } from '../src/measure-throws/dto/measureThrow.dto';
-// import { EditUserDto } from '../src/user/dto/edit-user-dto';
+import { EditUserDto } from '../src/user/dto/edit-user-dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -27,7 +27,7 @@ describe('App e2e', () => {
 
     prisma = app.get(PrismaService);
     await prisma.cleanDb();
-    pactum.request.setBaseUrl('http://localhost:3000');
+    pactum.request.setBaseUrl('http://localhost:3001');
   });
 
   afterAll(() => {
@@ -115,23 +115,24 @@ describe('App e2e', () => {
       });
     });
 
-    // describe('Edit User', () => {
-    //   it('should edit user', () => {
-    //     const dto: EditUserDto = {
-    //       firstName: 'Jake',
-    //       email: 'jake@gmail.com',
-    //     };
-    //     return pactum
-    //       .spec()
-    //       .patch('/users')
-    //       .withHeaders({
-    //         Authorization: 'Bearer $S{userAt}',
-    //       })
-    //       .expectStatus(200)
-    //       .expectBodyContains(dto.firstName)
-    //       .expectBodyContains(dto.email);
-    //   });
-    // });
+    describe('Edit User', () => {
+      it('should edit user', () => {
+        const dto: EditUserDto = {
+          firstName: 'Jake',
+          email: 'jake@gmail.com',
+        };
+        return pactum
+          .spec()
+          .patch('/users')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(200)
+          .expectBodyContains(dto.firstName)
+          .expectBodyContains(dto.email);
+      });
+    });
   });
 
   describe('Measured Throws', () => {
@@ -151,7 +152,7 @@ describe('App e2e', () => {
     describe('Create throw', () => {
       const dto: MeasuredThrowsDto = {
         disc: 'Boss',
-        distance: '450',
+        distance: '350',
       };
       it('should create throw', () => {
         return pactum
