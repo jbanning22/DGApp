@@ -134,94 +134,94 @@ describe('App e2e', () => {
           .expectBodyContains(dto.email);
       });
     });
-  });
 
-  describe('Measured Throws', () => {
-    describe('Get empty throws', () => {
-      it('should get throws', () => {
-        return pactum
-          .spec()
-          .get('/measure-throws')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
-          .expectStatus(200)
-          .expectBody([]);
-      });
-    });
-
-    describe('Create throw', () => {
-      const dto: MeasuredThrowsDto = {
-        disc: 'Boss',
-        distance: '350',
-      };
-      it('should create throw', () => {
-        return pactum
-          .spec()
-          .post('/measure-throws')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
-          .withBody(dto)
-          .expectStatus(201)
-          .stores('throwId', 'id');
-      });
-    });
-
-    describe('Get throw by id', () => {
-      it('should get throw by id', () => {
-        return pactum
-          .spec()
-          .get('/measure-throws/{id}')
-          .withPathParams('id', '$S{throwId}')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
-          .expectStatus(200)
-          .expectBodyContains('$S{throwId}');
-      });
-    });
-
-    describe('Edit throw by id', () => {
-      const dto: EditThrowDto = {
-        throwtype: 'roller',
-        distance: '500',
-      };
-      it('should edit throw', () => {
-        return pactum
-          .spec()
-          .patch('/measure-throws/{id}')
-          .withPathParams('id', '$S{throwId}')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
-          .withBody(dto)
-          .expectStatus(200)
-          .expectBodyContains(dto.distance)
-          .expectBodyContains(dto.throwtype);
-      });
-    });
-    describe('Delete throws by id', () => {
-      it('should delete throws', () => {
-        return pactum
-          .spec()
-          .delete('/measure-throws/{id}')
-          .withPathParams('id', '$S{throwId}')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
-          .expectStatus(204);
+    describe('Measured Throws', () => {
+      describe('Get empty throws', () => {
+        it('should get throws', () => {
+          return pactum
+            .spec()
+            .get('/measure-throws')
+            .withHeaders({
+              Authorization: 'Bearer $S{userAt}',
+            })
+            .expectStatus(200)
+            .expectBody([]);
+        });
       });
 
-      it('should get empty throw', () => {
-        return pactum
-          .spec()
-          .get('/measure-throws')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
-          .expectStatus(200)
-          .expectJsonLength(0);
+      describe('Create throw', () => {
+        const dto: MeasuredThrowsDto = {
+          disc: 'Boss',
+          distance: '350',
+        };
+        it('should create throw', () => {
+          return pactum
+            .spec()
+            .post('/measure-throws')
+            .withHeaders({
+              Authorization: 'Bearer $S{userAt}',
+            })
+            .withBody(dto)
+            .expectStatus(201)
+            .stores('throwId', 'id');
+        });
+      });
+
+      describe('Get throw by id', () => {
+        it('should get throw by id', () => {
+          return pactum
+            .spec()
+            .get('/measure-throws/{id}')
+            .withPathParams('id', '$S{throwId}')
+            .withHeaders({
+              Authorization: 'Bearer $S{userAt}',
+            })
+            .expectStatus(200)
+            .expectBodyContains('$S{throwId}');
+        });
+      });
+
+      describe('Edit throw by id', () => {
+        const dto: EditThrowDto = {
+          throwtype: 'roller',
+          distance: '500',
+        };
+        it('should edit throw', () => {
+          return pactum
+            .spec()
+            .patch('/measure-throws/{id}')
+            .withPathParams('id', '$S{throwId}')
+            .withHeaders({
+              Authorization: 'Bearer $S{userAt}',
+            })
+            .withBody(dto)
+            .expectStatus(200)
+            .expectBodyContains(dto.distance)
+            .expectBodyContains(dto.throwtype);
+        });
+      });
+      describe('Delete throws by id', () => {
+        it('should delete throws', () => {
+          return pactum
+            .spec()
+            .delete('/measure-throws/{id}')
+            .withPathParams('id', '$S{throwId}')
+            .withHeaders({
+              Authorization: 'Bearer $S{userAt}',
+            })
+            .expectStatus(200);
+        });
+
+        it('should get empty throw', () => {
+          return pactum
+            .spec()
+            .get('/measure-throws')
+            .withHeaders({
+              Authorization: 'Bearer $S{userAt}',
+            })
+            .expectStatus(200)
+            .expectJsonLength(0);
+        });
       });
     });
   });
