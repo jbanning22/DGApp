@@ -20,4 +20,13 @@ export class UserService {
 
     return user;
   }
+
+  async deleteUserById(userId: number) {
+    await this.prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+    return { msg: 'user deleted' };
+  }
 }
