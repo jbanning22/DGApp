@@ -201,5 +201,28 @@ describe('App e2e', () => {
           .expectBodyContains(dto.throwtype);
       });
     });
+    describe('Delete throws by id', () => {
+      it('should delete throws', () => {
+        return pactum
+          .spec()
+          .delete('/measure-throws/{id}')
+          .withPathParams('id', '$S{throwId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(204);
+      });
+
+      it('should get empty throw', () => {
+        return pactum
+          .spec()
+          .get('/measure-throws')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectJsonLength(0);
+      });
+    });
   });
 });

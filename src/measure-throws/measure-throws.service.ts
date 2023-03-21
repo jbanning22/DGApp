@@ -69,5 +69,11 @@ export class MeasureThrowsService {
         id: throwId,
       },
     });
+    const throws = await this.prisma.measuredThrow.findMany({
+      where: {
+        userId,
+      },
+    });
+    return { throws: throws };
   }
 }

@@ -51,7 +51,7 @@ export class MeasureThrowsController {
     return this.measureThrowsService.editThrowById(userId, throwId, dto);
   }
 
-  @HttpCode(HttpStatus.NO_CONTENT)
+  //   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   deleteThrowById(
     @GetUser('id') userId: number,
