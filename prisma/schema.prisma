@@ -18,6 +18,7 @@ model User {
   hash           String 
 
   measuredThrows  measuredThrow[]
+  scorecards  Scorecard[]
 //   rounds         Rounds[]
   @@map("users")
 }
@@ -37,13 +38,32 @@ model measuredThrow {
   @@map("measuredThrows")
 }
 
-// model Rounds {
-//     id          Int @id @default(autoincrement())
-//     createdAt   DateTime @default(now())
+model Scorecard {
+    id            Int @id @default(autoincrement())
+    createdAt     DateTime @default(now())
 
-//     courseName  String?
-//     scoreCard   Json?   
+    courseName    String?
+    playerId       Int
+    roundId        Int
+    holes         Hole[]
 
-//     playerId    Int 
-//     player  User  @relation(fields: [playerId], references: [id])
-// }
+    user User  @relation(fields: [playerId], references: [id])
+    round Round   @relation(fields: [roundId], references: [id])
+
+}
+
+model Hole {
+    id            Int @id @default(autoincrement())
+    holeNumber    Int
+    par           Int
+    strokes       Int
+    scorecardId   Int
+
+    scorecard   Scorecard @relation(fields: [scorecardId], references: [id])
+}
+
+model Round {
+    id       Int @id @default(autoincrement())
+    scorecards Scorecard[]
+
+}
