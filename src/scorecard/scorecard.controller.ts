@@ -1,4 +1,12 @@
-import { Controller, Get, UseGuards, Body, Post } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  UseGuards,
+  Body,
+  Param,
+  Post,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { GetUser } from '../auth/decorator/get-user.decorator';
 import { JwtGuard } from '../auth/guards/jwt.guard';
 import { ScorecardService } from './scorecard.service';
@@ -12,6 +20,14 @@ export class ScorecardController {
   @Get()
   getScorecards(@GetUser('id') playerId: number) {
     return this.scorecardService.getScorecards(playerId);
+  }
+
+  @Get(':id')
+  getScorecardById(
+    @GetUser('id') playerId: number,
+    @Param('id', ParseIntPipe) throwId: number,
+  ) {
+    return this.scorecardService.getScorecardById(playerId, throwId);
   }
 
   @Post()

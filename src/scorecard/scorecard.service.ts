@@ -13,6 +13,16 @@ export class ScorecardService {
       },
     });
   }
+
+  getScorecardById(playerId: number, scorecardId: number) {
+    return this.prisma.scorecard.findFirst({
+      where: {
+        id: scorecardId,
+        playerId,
+      },
+    });
+  }
+
   async createScorecard(playerId: number, dto: ScorecardDto) {
     const scorecard = await this.prisma.scorecard.create({
       data: {

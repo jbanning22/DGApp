@@ -26,13 +26,6 @@ export class MeasureThrowsController {
     return this.measureThrowsService.getMeasuredThrows(userId);
   }
 
-  @Get(':id')
-  getThrowsById(
-    @GetUser('id') userId: number,
-    @Param('id', ParseIntPipe) throwId: number,
-  ) {
-    return this.measureThrowsService.getThrowsById(userId, throwId);
-  }
   @Post()
   createMeasuredThrow(
     @GetUser('id') userId: number,
