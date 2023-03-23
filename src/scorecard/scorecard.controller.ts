@@ -27,9 +27,9 @@ export class ScorecardController {
   @Get(':id')
   getScorecardById(
     @GetUser('id') playerId: number,
-    @Param('id', ParseIntPipe) throwId: number,
+    @Param('id', ParseIntPipe) scorecardId: number,
   ) {
-    return this.scorecardService.getScorecardById(playerId, throwId);
+    return this.scorecardService.getScorecardById(playerId, scorecardId);
   }
 
   @Post()

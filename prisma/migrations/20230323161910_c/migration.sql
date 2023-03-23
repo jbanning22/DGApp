@@ -40,6 +40,7 @@ CREATE TABLE "Hole" (
     "holeNumber" INTEGER NOT NULL,
     "par" INTEGER NOT NULL,
     "strokes" INTEGER NOT NULL,
+    "playerId" INTEGER NOT NULL,
     "scorecardId" INTEGER,
 
     CONSTRAINT "Hole_pkey" PRIMARY KEY ("id")
@@ -63,6 +64,9 @@ ALTER TABLE "Scorecard" ADD CONSTRAINT "Scorecard_playerId_fkey" FOREIGN KEY ("p
 
 -- AddForeignKey
 ALTER TABLE "Scorecard" ADD CONSTRAINT "Scorecard_roundId_fkey" FOREIGN KEY ("roundId") REFERENCES "Round"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Hole" ADD CONSTRAINT "Hole_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Hole" ADD CONSTRAINT "Hole_scorecardId_fkey" FOREIGN KEY ("scorecardId") REFERENCES "Scorecard"("id") ON DELETE SET NULL ON UPDATE CASCADE;

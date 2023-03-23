@@ -19,6 +19,7 @@ model User {
 
   measuredThrows  measuredThrow[]
   scorecards  Scorecard[]
+  hole        Hole[]
 //   rounds         Rounds[]
   @@map("users")
 }
@@ -54,12 +55,16 @@ model Scorecard {
 
 model Hole {
     id            Int @id @default(autoincrement())
+
     holeNumber    Int
     par           Int
     strokes       Int
+
+    playerId      Int
     scorecardId   Int?
 
     scorecard   Scorecard? @relation(fields: [scorecardId], references: [id])
+    user User  @relation(fields: [playerId], references: [id])
 }
 
 model Round {
