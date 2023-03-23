@@ -43,10 +43,10 @@ model Scorecard {
     createdAt     DateTime @default(now())
 
     courseName    String?
-    playerId       Int
-    roundId        Int?
     holes         Hole[]
 
+    playerId       Int
+    roundId        Int?
     user User  @relation(fields: [playerId], references: [id])
     round Round?   @relation(fields: [roundId], references: [id])
 

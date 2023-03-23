@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ScorecardDto } from './dto';
 
@@ -31,5 +31,29 @@ export class ScorecardService {
       },
     });
     return scorecard;
+  }
+
+  async editScorecardById(
+    playerId: number,
+    scorecardId: number,
+    dto: ScorecardDto,
+  ) {
+    const scorecard = await this.prisma.scorecard.findUnique({
+      where: {
+        id: playerId,
+      },
+    });
+
+    if (!scorecard || scorecard.playerId !== playerId)
+      throw new ForbiddenException('Access to resource denied');
+
+    return this.prisma.scorecard.update({
+      where: {
+        id: scorecardId,
+      },
+      data: {
+        ...dto,
+      },
+    });
   }
 }

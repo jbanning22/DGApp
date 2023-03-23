@@ -5,6 +5,7 @@ import {
   Body,
   Param,
   Post,
+  Patch,
   ParseIntPipe,
 } from '@nestjs/common';
 import { GetUser } from '../auth/decorator/get-user.decorator';
@@ -33,5 +34,14 @@ export class ScorecardController {
   @Post()
   createScorecard(@GetUser('id') playerId: number, @Body() dto: ScorecardDto) {
     return this.scorecardService.createScorecard(playerId, dto);
+  }
+
+  @Patch(':id')
+  editScorecardById(
+    @GetUser('id') playerId: number,
+    @Param('id', ParseIntPipe) scorecardId: number,
+    @Body() dto: ScorecardDto,
+  ) {
+    return this.scorecardService.editScorecardById(playerId, scorecardId, dto);
   }
 }
