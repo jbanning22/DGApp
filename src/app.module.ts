@@ -7,6 +7,8 @@ import { UserModule } from './user/user.module';
 import { MeasureThrowsModule } from './measure-throws/measure-throws.module';
 // import { RoundsModule } from './rounds/rounds.module';
 import { ConfigModule } from '@nestjs/config';
+import { ScorecardModule } from './scorecard/scorecard.module';
+import { HoleModule } from './hole/hole.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { ConfigModule } from '@nestjs/config';
     UserModule,
     MeasureThrowsModule,
     PrismaModule,
+    ScorecardModule,
+    HoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
