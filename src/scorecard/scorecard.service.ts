@@ -6,10 +6,10 @@ import { ScorecardDto } from './dto';
 export class ScorecardService {
   constructor(private prisma: PrismaService) {}
 
-  getScorecards(userId: number) {
+  getScorecards(playerId: number) {
     return this.prisma.scorecard.findMany({
       where: {
-        id: userId,
+        id: playerId,
       },
     });
   }
