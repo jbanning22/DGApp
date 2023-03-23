@@ -5,6 +5,7 @@ import {
   Body,
   Param,
   Post,
+  Delete,
   Patch,
   ParseIntPipe,
 } from '@nestjs/common';
@@ -43,5 +44,13 @@ export class ScorecardController {
     @Body() dto: ScorecardDto,
   ) {
     return this.scorecardService.editScorecardById(playerId, scorecardId, dto);
+  }
+
+  @Delete(':id')
+  deleteThrowById(
+    @GetUser('id') playerId: number,
+    @Param('id', ParseIntPipe) scorecardId: number,
+  ) {
+    return this.scorecardService.deleteScorecardById(playerId, scorecardId);
   }
 }

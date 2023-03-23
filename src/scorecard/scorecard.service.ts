@@ -56,4 +56,21 @@ export class ScorecardService {
       },
     });
   }
+
+  async deleteScorecardById(playerId: number, scorecardId: number) {
+    const scorecard = await this.prisma.scorecard.findUnique({
+      where: {
+        id: scorecardId,
+      },
+    });
+
+    if (!scorecard || scorecard.playerId !== playerId)
+      throw new ForbiddenException('Access to resources denied');
+
+    await this.prisma.scorecard.delete({
+      where: {
+        id: scorecardId,
+      },
+    });
+  }
 }
