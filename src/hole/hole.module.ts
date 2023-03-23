@@ -4,6 +4,6 @@ import { HoleService } from './hole.service';
 
 @Module({
   controllers: [HoleController],
-  providers: [HoleService]
+  providers: [HoleService],
 })
 export class HoleModule {}
