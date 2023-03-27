@@ -20,7 +20,6 @@ model User {
   measuredThrows  measuredThrow[]
   scorecards  Scorecard[]
   hole        Hole[]
-//   rounds         Rounds[]
   @@map("users")
 }
 
@@ -43,13 +42,12 @@ model Scorecard {
     id            Int @id @default(autoincrement())
     createdAt     DateTime @default(now())
 
+    isCompleted    Boolean?
     courseName    String?
     holes         Hole[]
 
     playerId       Int
-    roundId        Int?
     user User  @relation(fields: [playerId], references: [id])
-    round Round?   @relation(fields: [roundId], references: [id])
 
 }
 
@@ -65,10 +63,4 @@ model Hole {
 
     scorecard   Scorecard? @relation(fields: [scorecardId], references: [id])
     user User  @relation(fields: [playerId], references: [id])
-}
-
-model Round {
-    id       Int @id @default(autoincrement())
-    scorecards Scorecard[]
-
 }

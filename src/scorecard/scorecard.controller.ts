@@ -25,11 +25,8 @@ export class ScorecardController {
   }
 
   @Get(':id')
-  getScorecardById(
-    @GetUser('id') playerId: number,
-    @Param('id', ParseIntPipe) scorecardId: number,
-  ) {
-    return this.scorecardService.getScorecardById(playerId, scorecardId);
+  getScorecardById(@Param('id', ParseIntPipe) id: number) {
+    return this.scorecardService.getScorecardById(id);
   }
 
   @Post()
@@ -39,18 +36,18 @@ export class ScorecardController {
 
   @Patch(':id')
   editScorecardById(
-    @GetUser('id') playerId: number,
-    @Param('id', ParseIntPipe) scorecardId: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() dto: ScorecardDto,
+    @GetUser('id') playerId: number,
   ) {
-    return this.scorecardService.editScorecardById(playerId, scorecardId, dto);
+    return this.scorecardService.editScorecardById(id, dto, playerId);
   }
 
   @Delete(':id')
   deleteThrowById(
     @GetUser('id') playerId: number,
-    @Param('id', ParseIntPipe) scorecardId: number,
+    @Param('id', ParseIntPipe) id: number,
   ) {
-    return this.scorecardService.deleteScorecardById(playerId, scorecardId);
+    return this.scorecardService.deleteScorecardById(id, playerId);
   }
 }

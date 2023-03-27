@@ -1,4 +1,4 @@
-import { IsOptional, IsInt } from 'class-validator';
+import { IsInt, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class HoleDto {
@@ -13,4 +13,9 @@ export class HoleDto {
   @IsInt()
   @Transform(({ value }) => parseInt(value))
   par: number;
+
+  @IsInt()
+  @IsOptional()
+  @Transform(({ value }) => parseInt(value))
+  scorecardId?: number;
 }

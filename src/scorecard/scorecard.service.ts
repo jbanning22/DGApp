@@ -14,11 +14,10 @@ export class ScorecardService {
     });
   }
 
-  getScorecardById(playerId: number, scorecardId: number) {
+  getScorecardById(scorecardId: number) {
     return this.prisma.scorecard.findFirst({
       where: {
         id: scorecardId,
-        playerId,
       },
     });
   }
@@ -33,14 +32,10 @@ export class ScorecardService {
     return scorecard;
   }
 
-  async editScorecardById(
-    playerId: number,
-    scorecardId: number,
-    dto: ScorecardDto,
-  ) {
+  async editScorecardById(id: number, dto: ScorecardDto, playerId: number) {
     const scorecard = await this.prisma.scorecard.findUnique({
       where: {
-        id: playerId,
+        id: id,
       },
     });
 
@@ -49,7 +44,7 @@ export class ScorecardService {
 
     return this.prisma.scorecard.update({
       where: {
-        id: scorecardId,
+        id: id,
       },
       data: {
         ...dto,
@@ -57,19 +52,19 @@ export class ScorecardService {
     });
   }
 
-  async deleteScorecardById(playerId: number, scorecardId: number) {
+  async deleteScorecardById(playerId: number, id: number) {
     const scorecard = await this.prisma.scorecard.findUnique({
       where: {
-        id: scorecardId,
+        id,
       },
     });
 
-    if (!scorecard || scorecard.playerId !== playerId)
+    if (!scorecard || scorecard.id !== id)
       throw new ForbiddenException('Access to resources denied');
 
     await this.prisma.scorecard.delete({
       where: {
-        id: scorecardId,
+        id,
       },
     });
   }

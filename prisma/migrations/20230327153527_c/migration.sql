@@ -27,9 +27,9 @@ CREATE TABLE "measuredThrows" (
 CREATE TABLE "Scorecard" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isCompleted" BOOLEAN,
     "courseName" TEXT,
     "playerId" INTEGER NOT NULL,
-    "roundId" INTEGER,
 
     CONSTRAINT "Scorecard_pkey" PRIMARY KEY ("id")
 );
@@ -46,13 +46,6 @@ CREATE TABLE "Hole" (
     CONSTRAINT "Hole_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "Round" (
-    "id" SERIAL NOT NULL,
-
-    CONSTRAINT "Round_pkey" PRIMARY KEY ("id")
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
@@ -61,9 +54,6 @@ ALTER TABLE "measuredThrows" ADD CONSTRAINT "measuredThrows_userId_fkey" FOREIGN
 
 -- AddForeignKey
 ALTER TABLE "Scorecard" ADD CONSTRAINT "Scorecard_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Scorecard" ADD CONSTRAINT "Scorecard_roundId_fkey" FOREIGN KEY ("roundId") REFERENCES "Round"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Hole" ADD CONSTRAINT "Hole_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

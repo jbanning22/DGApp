@@ -23,11 +23,10 @@ export class HoleService {
     });
   }
 
-  async createHole(playerId: number, dto: HoleDto, scorecardId: number) {
+  async createHole(playerId: number, dto: HoleDto) {
     const hole = await this.prisma.hole.create({
       data: {
         playerId,
-        scorecardId,
         ...dto,
       },
     });
