@@ -260,13 +260,13 @@ describe('App e2e', () => {
       it('should get scorecard by id', () => {
         return pactum
           .spec()
-          .get('/scorecards/{id}')
-          .withPathParams('id', '$S{scorecardId}')
+          .get('/scorecard/{id}')
+          .withPathParams('id', '$S{id}')
           .withHeaders({
             Authorization: 'Bearer $S{userAt}',
           })
           .expectStatus(200)
-          .expectBodyContains('$S{scorecardId}');
+          .expectBodyContains('$S{id}');
       });
     });
 
@@ -278,7 +278,7 @@ describe('App e2e', () => {
         return pactum
           .spec()
           .patch('/scorecard/{id}')
-          .withPathParams('id', '$S{scorecardId}')
+          .withPathParams('id', '$S{id}')
           .withHeaders({
             Authorization: 'Bearer $S{userAt}',
           })
@@ -291,8 +291,8 @@ describe('App e2e', () => {
       it('should delete scorecard', () => {
         return pactum
           .spec()
-          .delete('/scorecard/$S{scorecardId}')
-          .withPathParams('id', '$S{scorecardId}')
+          .delete('/scorecard/{id}')
+          .withPathParams('id', '$S{id}')
           .withHeaders({
             Authorization: 'Bearer $S{userAt}',
           })
