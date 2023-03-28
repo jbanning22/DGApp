@@ -8,6 +8,7 @@ import { MeasuredThrowsDto } from '../src/measure-throws/dto/measureThrow.dto';
 import { EditUserDto } from '../src/user/dto/edit-user-dto';
 import { EditThrowDto } from '../src/measure-throws/dto/edit-measured-throw.dto';
 import { ScorecardDto } from '../src/scorecard/dto/scorecard.dto';
+import { HoleDto } from '../src/hole/dto/hole.dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -292,6 +293,87 @@ describe('App e2e', () => {
         return pactum
           .spec()
           .delete('/scorecard/{id}')
+          .withPathParams('id', '$S{id}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200);
+      });
+    });
+  });
+
+  describe('Holes', () => {
+    describe('Get empty holes', () => {
+      it('should get holes', () => {
+        return pactum
+          .spec()
+          .get('/hole')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBody([]);
+      });
+    });
+
+    describe('Create hole', () => {
+      const dto: HoleDto = {
+        holeNumber: 1,
+        strokes: 3,
+        par: 3,
+      };
+      it('should create hole', () => {
+        return pactum
+          .spec()
+          .post('/hole')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(201)
+          .stores('id', 'playerId');
+      });
+    });
+
+    describe('Get hole by id', () => {
+      it('should get hole by id', () => {
+        return pactum
+          .spec()
+          .get('/hole/{id}')
+          .withPathParams('id', '$S{id}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBodyContains('$S{id}');
+      });
+    });
+
+    describe('Edit hole by id', () => {
+      const dto: HoleDto = {
+        holeNumber: 4,
+        strokes: 3,
+        par: 4,
+      };
+      it('should edit hole', () => {
+        return pactum
+          .spec()
+          .patch('/hole/{id}')
+          .withPathParams('id', '$S{id}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(200)
+          .expectBodyContains(dto.strokes);
+      });
+    });
+
+    describe('Delete hole by id', () => {
+      it('should delete hole', () => {
+        return pactum
+          .spec()
+          .delete('/hole/{id}')
           .withPathParams('id', '$S{id}')
           .withHeaders({
             Authorization: 'Bearer $S{userAt}',

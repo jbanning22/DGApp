@@ -7,8 +7,6 @@ import {
   Param,
   Patch,
   ParseIntPipe,
-  HttpCode,
-  HttpStatus,
   Delete,
 } from '@nestjs/common';
 import { JwtGuard } from '../auth/guards/jwt.guard';
