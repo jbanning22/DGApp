@@ -25,12 +25,16 @@ export class ScorecardController {
   }
 
   @Get(':id')
-  getScorecardById(@Param('id', ParseIntPipe) id: number) {
-    return this.scorecardService.getScorecardById(id);
+  getScorecardById(
+    @GetUser('id') playerId: number,
+    @Param('id', ParseIntPipe) scorecardId: number,
+  ) {
+    return this.scorecardService.getScorecardById(playerId, scorecardId);
   }
 
   @Post()
   createScorecard(@GetUser('id') playerId: number, @Body() dto: ScorecardDto) {
+    console.log(dto);
     return this.scorecardService.createScorecard(playerId, dto);
   }
 
@@ -46,8 +50,8 @@ export class ScorecardController {
   @Delete(':id')
   deleteThrowById(
     @GetUser('id') playerId: number,
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) scorecardId: number,
   ) {
-    return this.scorecardService.deleteScorecardById(id, playerId);
+    return this.scorecardService.deleteScorecardById(playerId, scorecardId);
   }
 }

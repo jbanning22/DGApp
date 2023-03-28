@@ -17,6 +17,8 @@ export class PrismaService extends PrismaClient {
     return this.$transaction([
       this.measuredThrow.deleteMany(),
       this.user.deleteMany(),
+      this.scorecard.deleteMany(),
+      this.hole.deleteMany(),
     ]);
   }
 }

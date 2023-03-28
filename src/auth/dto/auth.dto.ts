@@ -9,15 +9,15 @@ export class AuthDto {
   @IsNotEmpty()
   password: string;
 
-  //   @IsString()
-  //   @IsOptional()
-  //   firstName?: string;
+  @IsString()
+  @IsOptional()
+  firstName?: string;
 
-  //   @IsString()
-  //   @IsOptional()
-  //   lastName?: string;
+  @IsString()
+  @IsOptional()
+  lastName?: string;
 
-  //   @IsString()
-  //   @IsOptional()
-  //   userName?: string;
+  @IsString()
+  @IsOptional()
+  userName?: string;
 }

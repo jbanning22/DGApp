@@ -47,6 +47,9 @@ CREATE TABLE "Hole" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "users_userName_key" ON "users"("userName");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- AddForeignKey

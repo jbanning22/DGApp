@@ -7,6 +7,7 @@ import { AppModule } from './../src/app.module';
 import { MeasuredThrowsDto } from '../src/measure-throws/dto/measureThrow.dto';
 import { EditUserDto } from '../src/user/dto/edit-user-dto';
 import { EditThrowDto } from '../src/measure-throws/dto/edit-measured-throw.dto';
+import { ScorecardDto } from '../src/scorecard/dto/scorecard.dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -134,94 +135,168 @@ describe('App e2e', () => {
           .expectBodyContains(dto.email);
       });
     });
+  });
+  describe('Measured Throws', () => {
+    describe('Get empty throws', () => {
+      it('should get throws', () => {
+        return pactum
+          .spec()
+          .get('/measure-throws')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBody([]);
+      });
+    });
 
-    describe('Measured Throws', () => {
-      describe('Get empty throws', () => {
-        it('should get throws', () => {
-          return pactum
-            .spec()
-            .get('/measure-throws')
-            .withHeaders({
-              Authorization: 'Bearer $S{userAt}',
-            })
-            .expectStatus(200)
-            .expectBody([]);
-        });
+    describe('Create throw', () => {
+      const dto: MeasuredThrowsDto = {
+        disc: 'Boss',
+        distance: '350',
+      };
+      it('should create throw', () => {
+        return pactum
+          .spec()
+          .post('/measure-throws')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(201)
+          .stores('throwId', 'id');
+      });
+    });
+
+    describe('Get throw by id', () => {
+      it('should get throw by id', () => {
+        return pactum
+          .spec()
+          .get('/measure-throws/{id}')
+          .withPathParams('id', '$S{throwId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBodyContains('$S{throwId}');
+      });
+    });
+
+    describe('Edit throw by id', () => {
+      const dto: EditThrowDto = {
+        throwtype: 'roller',
+        distance: '500',
+      };
+      it('should edit throw', () => {
+        return pactum
+          .spec()
+          .patch('/measure-throws/{id}')
+          .withPathParams('id', '$S{throwId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(200)
+          .expectBodyContains(dto.distance)
+          .expectBodyContains(dto.throwtype);
+      });
+    });
+    describe('Delete throws by id', () => {
+      it('should delete throws', () => {
+        return pactum
+          .spec()
+          .delete('/measure-throws/{id}')
+          .withPathParams('id', '$S{throwId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200);
       });
 
-      describe('Create throw', () => {
-        const dto: MeasuredThrowsDto = {
-          disc: 'Boss',
-          distance: '350',
-        };
-        it('should create throw', () => {
-          return pactum
-            .spec()
-            .post('/measure-throws')
-            .withHeaders({
-              Authorization: 'Bearer $S{userAt}',
-            })
-            .withBody(dto)
-            .expectStatus(201)
-            .stores('throwId', 'id');
-        });
+      it('should get empty throw', () => {
+        return pactum
+          .spec()
+          .get('/measure-throws')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectJsonLength(0);
       });
-
-      describe('Get throw by id', () => {
-        it('should get throw by id', () => {
-          return pactum
-            .spec()
-            .get('/measure-throws/{id}')
-            .withPathParams('id', '$S{throwId}')
-            .withHeaders({
-              Authorization: 'Bearer $S{userAt}',
-            })
-            .expectStatus(200)
-            .expectBodyContains('$S{throwId}');
-        });
+    });
+  });
+  describe('Scorecard', () => {
+    describe('Get empty scorecards', () => {
+      it('should get scorecards', () => {
+        return pactum
+          .spec()
+          .get('/scorecard')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBody([]);
       });
+    });
 
-      describe('Edit throw by id', () => {
-        const dto: EditThrowDto = {
-          throwtype: 'roller',
-          distance: '500',
-        };
-        it('should edit throw', () => {
-          return pactum
-            .spec()
-            .patch('/measure-throws/{id}')
-            .withPathParams('id', '$S{throwId}')
-            .withHeaders({
-              Authorization: 'Bearer $S{userAt}',
-            })
-            .withBody(dto)
-            .expectStatus(200)
-            .expectBodyContains(dto.distance)
-            .expectBodyContains(dto.throwtype);
-        });
+    describe('Create scorecard', () => {
+      const dto: ScorecardDto = {
+        courseName: 'White Clay',
+      };
+      it('should create scorecard', () => {
+        return pactum
+          .spec()
+          .post('/scorecard')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(201)
+          .stores('id', 'playerId');
       });
-      describe('Delete throws by id', () => {
-        it('should delete throws', () => {
-          return pactum
-            .spec()
-            .delete('/measure-throws/{id}')
-            .withPathParams('id', '$S{throwId}')
-            .withHeaders({
-              Authorization: 'Bearer $S{userAt}',
-            })
-            .expectStatus(200);
-        });
+    });
 
-        it('should get empty throw', () => {
-          return pactum
-            .spec()
-            .get('/measure-throws')
-            .withHeaders({
-              Authorization: 'Bearer $S{userAt}',
-            })
-            .expectStatus(200)
-            .expectJsonLength(0);
-        });
+    describe('Get scorecard by id', () => {
+      it('should get scorecard by id', () => {
+        return pactum
+          .spec()
+          .get('/scorecards/{id}')
+          .withPathParams('id', '$S{scorecardId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBodyContains('$S{scorecardId}');
+      });
+    });
+
+    describe('Edit scorecard by id', () => {
+      const dto: ScorecardDto = {
+        courseName: 'broken chains',
+      };
+      it('should edit scorecard', () => {
+        return pactum
+          .spec()
+          .patch('/scorecard/{id}')
+          .withPathParams('id', '$S{scorecardId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(200)
+          .expectBodyContains(dto.courseName);
+      });
+    });
+    describe('Delete scorecard by id', () => {
+      it('should delete scorecard', () => {
+        return pactum
+          .spec()
+          .delete('/scorecard/$S{scorecardId}')
+          .withPathParams('id', '$S{scorecardId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200);
       });
     });
   });
