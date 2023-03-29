@@ -23,6 +23,14 @@ export class HoleService {
     });
   }
 
+  getHolesByScorecardId(scorecardId: number) {
+    return this.prisma.hole.findMany({
+      where: {
+        scorecardId,
+      },
+    });
+  }
+
   async createHole(playerId: number, dto: HoleDto) {
     const hole = await this.prisma.hole.create({
       data: {

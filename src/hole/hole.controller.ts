@@ -32,6 +32,11 @@ export class HoleController {
     return this.holeService.getHoleById(playerId, holeId);
   }
 
+  @Get('/holes/:id')
+  getHolesByScorecardId(@Param('id', ParseIntPipe) scorecardId: number) {
+    return this.holeService.getHolesByScorecardId(scorecardId);
+  }
+
   @Post()
   createHole(@GetUser('id') playerId: number, @Body() dto: HoleDto) {
     return this.holeService.createHole(playerId, dto);

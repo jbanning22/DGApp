@@ -16,6 +16,7 @@ export class ScorecardService {
 
   getScorecardById(playerId: number, scorecardId: number) {
     return this.prisma.scorecard.findFirst({
+      // return this.prisma.scorecard.findFirst({
       where: {
         id: scorecardId,
         playerId,
@@ -28,6 +29,17 @@ export class ScorecardService {
       data: {
         playerId,
         ...dto,
+        holes: {
+          createMany: {
+            data: [
+              { playerId, holeNumber: 1, par: 3, strokes: 0 },
+              { playerId, holeNumber: 2, par: 3, strokes: 0 },
+              { playerId, holeNumber: 3, par: 3, strokes: 0 },
+              { playerId, holeNumber: 4, par: 3, strokes: 0 },
+              { playerId, holeNumber: 5, par: 3, strokes: 0 },
+            ],
+          },
+        },
       },
     });
     return scorecard;
