@@ -25,19 +25,18 @@ export class ScorecardService {
   }
 
   async createScorecard(playerId: number, dto: ScorecardDto) {
+    const scorecardData = [];
+    for (let i = 1; i <= dto.courseLength; i++) {
+      scorecardData.push({ holeNumber: i, par: 3, strokes: 0, playerId });
+    }
+    console.log(dto.courseLength, scorecardData, dto);
     const scorecard = await this.prisma.scorecard.create({
       data: {
         playerId,
         ...dto,
         holes: {
           createMany: {
-            data: [
-              { playerId, holeNumber: 1, par: 3, strokes: 0 },
-              { playerId, holeNumber: 2, par: 3, strokes: 0 },
-              { playerId, holeNumber: 3, par: 3, strokes: 0 },
-              { playerId, holeNumber: 4, par: 3, strokes: 0 },
-              { playerId, holeNumber: 5, par: 3, strokes: 0 },
-            ],
+            data: scorecardData,
           },
         },
       },
