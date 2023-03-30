@@ -40,6 +40,9 @@ export class ScorecardService {
           },
         },
       },
+      include: {
+        holes: true,
+      },
     });
     return scorecard;
   }
