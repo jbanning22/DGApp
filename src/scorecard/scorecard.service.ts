@@ -11,6 +11,9 @@ export class ScorecardService {
       where: {
         playerId,
       },
+      include: {
+        holes: true,
+      },
     });
   }
 
@@ -20,6 +23,9 @@ export class ScorecardService {
       where: {
         id: scorecardId,
         playerId,
+      },
+      include: {
+        holes: true,
       },
     });
   }
@@ -63,6 +69,9 @@ export class ScorecardService {
       },
       data: {
         ...dto,
+      },
+      include: {
+        holes: true,
       },
     });
   }
