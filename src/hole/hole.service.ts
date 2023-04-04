@@ -1,6 +1,6 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { HoleDto } from './dto';
+import { HoleDto, PatchHoleDto } from './dto';
 
 @Injectable()
 export class HoleService {
@@ -41,7 +41,7 @@ export class HoleService {
     return hole;
   }
 
-  async editHoleById(playerId: number, holeId: number, dto: HoleDto) {
+  async editHoleById(playerId: number, holeId: number, dto: PatchHoleDto) {
     const hole = await this.prisma.hole.findUnique({
       where: {
         id: holeId,

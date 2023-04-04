@@ -10,50 +10,56 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { JwtGuard } from '../auth/guards/jwt.guard';
-import { GetUser } from '../auth/decorator/get-user.decorator';
+import { GetUserId } from '../auth/decorator/get-user-id.decorator';
 import { HoleService } from './hole.service';
-import { HoleDto } from './dto';
+import { HoleDto, PatchHoleDto } from './dto';
+import { ApiTags, ApiOkResponse, ApiCreatedResponse } from '@nestjs/swagger';
 
+@ApiTags('Holes')
 @UseGuards(JwtGuard)
 @Controller('hole')
 export class HoleController {
   constructor(private holeService: HoleService) {}
 
+  @ApiOkResponse()
   @Get()
-  getHoles(@GetUser('id') playerId: number) {
+  getHoles(@GetUserId('id') playerId: number) {
     return this.holeService.getHoles(playerId);
   }
 
+  @ApiOkResponse()
   @Get(':id')
   getHoleById(
-    @GetUser('id') playerId: number,
+    @GetUserId('id') playerId: number,
     @Param('id', ParseIntPipe) holeId: number,
   ) {
     return this.holeService.getHoleById(playerId, holeId);
   }
 
+  @ApiOkResponse()
   @Get('/holes/:id')
   getHolesByScorecardId(@Param('id', ParseIntPipe) scorecardId: number) {
     return this.holeService.getHolesByScorecardId(scorecardId);
   }
 
+  @ApiCreatedResponse({ type: HoleDto })
   @Post()
-  createHole(@GetUser('id') playerId: number, @Body() dto: HoleDto) {
+  createHole(@GetUserId('id') playerId: number, @Body() dto: HoleDto) {
     return this.holeService.createHole(playerId, dto);
   }
 
   @Patch(':id')
   editHoleById(
-    @GetUser('id') playerId: number,
+    @GetUserId('id') playerId: number,
     @Param('id', ParseIntPipe) holeId: number,
-    @Body() dto: HoleDto,
+    @Body() dto: PatchHoleDto,
   ) {
     return this.holeService.editHoleById(playerId, holeId, dto);
   }
 
   @Delete(':id')
   deleteHoleById(
-    @GetUser('id') playerId: number,
+    @GetUserId('id') playerId: number,
     @Param('id', ParseIntPipe) holeId: number,
   ) {
     return this.holeService.deleteHoleById(playerId, holeId);

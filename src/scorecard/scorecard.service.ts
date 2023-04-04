@@ -39,6 +39,7 @@ export class ScorecardService {
     const scorecard = await this.prisma.scorecard.create({
       data: {
         playerId,
+        isCompleted: false,
         ...dto,
         holes: {
           createMany: {
