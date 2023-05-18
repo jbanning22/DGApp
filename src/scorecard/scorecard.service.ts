@@ -11,23 +11,44 @@ export class ScorecardService {
       where: {
         playerId,
       },
+      include: {
+        holes: true,
+      },
     });
   }
 
   getScorecardById(playerId: number, scorecardId: number) {
     return this.prisma.scorecard.findFirst({
+      // return this.prisma.scorecard.findFirst({
       where: {
         id: scorecardId,
         playerId,
+      },
+      include: {
+        holes: true,
       },
     });
   }
 
   async createScorecard(playerId: number, dto: ScorecardDto) {
+    const scorecardData = [];
+    for (let i = 1; i <= dto.courseLength; i++) {
+      scorecardData.push({ holeNumber: i, par: 3, strokes: 0, playerId });
+    }
+    console.log(dto.courseLength, scorecardData, dto);
     const scorecard = await this.prisma.scorecard.create({
       data: {
         playerId,
+        isCompleted: false,
         ...dto,
+        holes: {
+          createMany: {
+            data: scorecardData,
+          },
+        },
+      },
+      include: {
+        holes: true,
       },
     });
     return scorecard;
@@ -49,6 +70,9 @@ export class ScorecardService {
       },
       data: {
         ...dto,
+      },
+      include: {
+        holes: true,
       },
     });
   }

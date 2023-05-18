@@ -43,6 +43,7 @@ model Scorecard {
     createdAt     DateTime @default(now())
 
     isCompleted    Boolean?
+    courseLength  Int
     courseName    String?
     holes         Hole[]
 

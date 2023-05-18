@@ -1,6 +1,6 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { HoleDto } from './dto';
+import { HoleDto, PatchHoleDto } from './dto';
 
 @Injectable()
 export class HoleService {
@@ -23,17 +23,28 @@ export class HoleService {
     });
   }
 
+  getHolesByScorecardId(scorecardId: number) {
+    return this.prisma.hole.findMany({
+      where: {
+        scorecardId,
+      },
+    });
+  }
+
   async createHole(playerId: number, dto: HoleDto) {
     const hole = await this.prisma.hole.create({
       data: {
         playerId,
-        ...dto,
+        par: dto.par,
+        strokes: dto.strokes,
+        scorecardId: dto.scorecardId,
+        holeNumber: dto.holeNumber,
       },
     });
     return hole;
   }
 
-  async editHoleById(playerId: number, holeId: number, dto: HoleDto) {
+  async editHoleById(playerId: number, holeId: number, dto: PatchHoleDto) {
     const hole = await this.prisma.hole.findUnique({
       where: {
         id: holeId,

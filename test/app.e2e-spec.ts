@@ -243,6 +243,8 @@ describe('App e2e', () => {
     describe('Create scorecard', () => {
       const dto: ScorecardDto = {
         courseName: 'White Clay',
+        courseLength: 18,
+        isCompleted: false,
       };
       it('should create scorecard', () => {
         return pactum
@@ -274,6 +276,7 @@ describe('App e2e', () => {
     describe('Edit scorecard by id', () => {
       const dto: ScorecardDto = {
         courseName: 'broken chains',
+        courseLength: 18,
       };
       it('should edit scorecard', () => {
         return pactum
@@ -303,18 +306,18 @@ describe('App e2e', () => {
   });
 
   describe('Holes', () => {
-    describe('Get empty holes', () => {
-      it('should get holes', () => {
-        return pactum
-          .spec()
-          .get('/hole')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
-          .expectStatus(200)
-          .expectBody([]);
-      });
-    });
+    // describe('Get empty holes', () => {
+    //   it('should get holes', () => {
+    //     return pactum
+    //       .spec()
+    //       .get('/hole')
+    //       .withHeaders({
+    //         Authorization: 'Bearer $S{userAt}',
+    //       })
+    //       .expectStatus(200)
+    //       .expectBody([]);
+    //   });
+    // });
 
     describe('Create hole', () => {
       const dto: HoleDto = {
