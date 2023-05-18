@@ -35,7 +35,10 @@ export class HoleService {
     const hole = await this.prisma.hole.create({
       data: {
         playerId,
-        ...dto,
+        par: dto.par,
+        strokes: dto.strokes,
+        scorecardId: dto.scorecardId,
+        holeNumber: dto.holeNumber,
       },
     });
     return hole;

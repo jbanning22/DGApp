@@ -41,7 +41,7 @@ export class MeasureThrowsController {
     @GetUserId('id') userId: number,
     @Body() dto: MeasuredThrowsDto,
   ) {
-    console.log(dto);
+    // console.log(dto);
     return this.measureThrowsService.createMeasuredThrow(userId, dto);
   }
 
@@ -61,7 +61,7 @@ export class MeasureThrowsController {
     @GetUserId('id') userId: number,
     @Param('id', ParseIntPipe) throwId: number,
   ) {
-    console.log('id being passed in is ', throwId);
+    // console.log('id being passed in is ', throwId);
     return this.measureThrowsService.deleteThrowById(userId, throwId);
   }
 }

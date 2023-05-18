@@ -8,4 +8,10 @@ export class PatchHoleDto {
   @IsOptional()
   @Transform(({ value }) => parseInt(value))
   strokes: number;
+
+  @ApiProperty()
+  @IsInt()
+  @IsOptional()
+  @Transform(({ value }) => parseInt(value))
+  par: number;
 }

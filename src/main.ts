@@ -11,7 +11,7 @@ async function bootstrap() {
     }),
   );
   const config = new DocumentBuilder()
-    .setTitle('IDISC APP')
+    .setTitle('IDISC Api')
     .setDescription('API is used to create and manage your disc golf career!')
     .setVersion('1.0')
     .build();

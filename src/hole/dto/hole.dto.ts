@@ -9,14 +9,16 @@ export class HoleDto {
   holeNumber: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsInt()
   @Transform(({ value }) => parseInt(value))
-  strokes: number;
+  strokes?: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsInt()
   @Transform(({ value }) => parseInt(value))
-  par: number;
+  par?: number;
 
   //   @ApiProperty()
   @IsInt()

@@ -10,7 +10,7 @@ export class EditUserDto {
   @ApiProperty()
   @IsString()
   @IsOptional()
-  username?: string;
+  userName?: string;
 
   @ApiProperty()
   @IsString()
@@ -21,6 +21,16 @@ export class EditUserDto {
   @IsString()
   @IsOptional()
   lastName?: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  city?: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  state?: string;
 
   @ApiProperty()
   @IsString()

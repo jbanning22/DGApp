@@ -12,7 +12,12 @@ export class UserService {
         id: userId,
       },
       data: {
-        ...dto,
+        userName: dto.userName,
+        firstName: dto.firstName,
+        lastName: dto.lastName,
+        email: dto.email,
+        city: dto.city,
+        state: dto.state,
       },
     });
 

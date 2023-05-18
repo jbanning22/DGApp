@@ -18,10 +18,14 @@ export class AuthService {
     const hash = await argon.hash(dto.password);
 
     try {
+      //   console.log('signup dto is: ', dto);
       const user = await this.prisma.user.create({
         data: {
           email: dto.email,
           hash,
+          firstName: dto.firstName,
+          lastName: dto.lastName,
+          userName: dto.userName,
         },
       });
       return this.signToken(user.id, user.email);
@@ -50,21 +54,69 @@ export class AuthService {
     return this.signToken(user.id, user.email);
   }
 
+  async signOut() {
+    return {
+      access_token: null,
+      refresh_token: null,
+    };
+  }
+
+  async newAccessToken(
+    refresh_token: string,
+  ): Promise<{ access_token: string; refresh_token: string }> {
+    const decoded = await this.decodeRefreshToken(refresh_token);
+    const payload = {
+      userId: decoded.sub,
+      email: decoded.email,
+    };
+    // console.log('refresh token inside of newAccessToken is: ', refresh_token);
+
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: payload.userId,
+      },
+    });
+
+    if (!user) throw new ForbiddenException('User not found');
+
+    const newTokens = await this.signToken(user.id, user.email);
+
+    return {
+      access_token: newTokens.access_token,
+      refresh_token: newTokens.refresh_token,
+    };
+  }
+
   async signToken(
     userId: number,
     email: string,
-  ): Promise<{ access_token: string }> {
+  ): Promise<{ access_token: string; refresh_token: string }> {
     const payload = {
       sub: userId,
       email,
     };
     const secret = this.config.get('JWT_SECRET');
+    const refreshToken = await this.jwt.signAsync(payload, {
+      expiresIn: '7d',
+      secret: secret,
+    });
     const token = await this.jwt.signAsync(payload, {
-      expiresIn: '120m',
+      expiresIn: '4h',
       secret: secret,
     });
     return {
       access_token: token,
+      refresh_token: refreshToken,
     };
+  }
+  async decodeRefreshToken(refresh_token: string) {
+    try {
+      const decoded = await this.jwt.verifyAsync(refresh_token, {
+        secret: this.config.get('JWT_SECRET'),
+      });
+      return decoded;
+    } catch (err) {
+      throw new ForbiddenException('Invalid token');
+    }
   }
 }
