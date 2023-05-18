@@ -13,6 +13,8 @@ model User {
   firstName      String?
   lastName       String?
   userName       String?  @unique
+  city           String?
+  state          String?
 
   email          String  @unique
   hash           String 
