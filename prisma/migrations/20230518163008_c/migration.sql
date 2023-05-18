@@ -4,6 +4,8 @@ CREATE TABLE "users" (
     "firstName" TEXT,
     "lastName" TEXT,
     "userName" TEXT,
+    "city" TEXT,
+    "state" TEXT,
     "email" TEXT NOT NULL,
     "hash" TEXT NOT NULL,
 
