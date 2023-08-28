@@ -44,7 +44,7 @@ model Scorecard {
     id            Int @id @default(autoincrement())
     createdAt     DateTime @default(now())
 
-    isCompleted    Boolean?
+    isCompleted   Boolean?
     courseLength  Int
     courseName    String?
     holes         Hole[]
@@ -67,3 +67,4 @@ model Hole {
     scorecard   Scorecard? @relation(fields: [scorecardId], references: [id])
     user User  @relation(fields: [playerId], references: [id])
 }
+
