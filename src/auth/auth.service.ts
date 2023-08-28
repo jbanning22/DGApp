@@ -26,6 +26,8 @@ export class AuthService {
           firstName: dto.firstName,
           lastName: dto.lastName,
           userName: dto.userName,
+          city: dto.city,
+          state: dto.state,
         },
       });
       return this.signToken(user.id, user.email);

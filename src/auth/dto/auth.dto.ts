@@ -24,4 +24,12 @@ export class AuthDto {
   @IsString()
   @IsOptional()
   userName?: string;
+
+  @IsString()
+  @IsOptional()
+  city?: string;
+
+  @IsString()
+  @IsOptional()
+  state?: string;
 }
