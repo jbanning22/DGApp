@@ -33,7 +33,7 @@ export class ScorecardService {
   async createScorecard(playerId: number, dto: ScorecardDto) {
     const scorecardData = [];
     for (let i = 1; i <= dto.courseLength; i++) {
-      scorecardData.push({ holeNumber: i, par: 3, strokes: 0, playerId });
+      scorecardData.push({ holeNumber: i, par: 3, strokes: 3, playerId });
     }
     console.log(dto.courseLength, scorecardData, dto);
     const scorecard = await this.prisma.scorecard.create({
