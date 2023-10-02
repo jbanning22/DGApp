@@ -2,6 +2,7 @@ import {
   Controller,
   Post,
   Body,
+  Patch,
   HttpCode,
   HttpStatus,
   Headers,
@@ -29,6 +30,14 @@ export class AuthController {
   signin(@Body() dto: AuthDto) {
     // console.log(dto);
     return this.authService.signin(dto);
+  }
+
+  @ApiOkResponse()
+  @HttpCode(HttpStatus.OK)
+  @Patch('reset-password')
+  resetPassword(@Body() dto: AuthDto) {
+    // console.log(dto);
+    return this.authService.resetPassword(dto);
   }
 
   @ApiOkResponse()

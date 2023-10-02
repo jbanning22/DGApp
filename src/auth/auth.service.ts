@@ -56,6 +56,40 @@ export class AuthService {
     return this.signToken(user.id, user.email);
   }
 
+  async resetPassword(dto: AuthDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email,
+      },
+    });
+
+    if (!user) {
+      throw new ForbiddenException('User not found');
+    }
+
+    const hash = await argon.hash(dto.password);
+
+    try {
+      await this.prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          hash,
+        },
+      });
+
+      return this.signToken(user.id, user.email);
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ForbiddenException('Credentials taken');
+        }
+      }
+      throw error;
+    }
+  }
+
   async signOut() {
     return {
       access_token: null,
