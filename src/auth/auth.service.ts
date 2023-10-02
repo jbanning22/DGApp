@@ -66,9 +66,8 @@ export class AuthService {
     if (!user) {
       throw new ForbiddenException('User not found');
     }
-    console.log('')
-    const hash = await argon.hash(dto.password);
 
+    const hash = await argon.hash(dto.password);
     try {
       await this.prisma.user.update({
         where: {
