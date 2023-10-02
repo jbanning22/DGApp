@@ -42,7 +42,6 @@ export class ScorecardController {
     @GetUserId('id') playerId: number,
     @Body() dto: ScorecardDto,
   ) {
-    console.log(dto);
     return this.scorecardService.createScorecard(playerId, dto);
   }
 
