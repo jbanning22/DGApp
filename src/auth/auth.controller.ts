@@ -36,7 +36,6 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Patch('reset-password')
   resetPassword(@Body() dto: AuthDto) {
-    console.log('CONTROLLER: reset password called with: ', dto);
     return this.authService.resetPassword(dto);
   }
 
