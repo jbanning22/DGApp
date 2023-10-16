@@ -62,27 +62,27 @@ export class ScorecardService {
       isCompleted,
     } = dto.userData.scorecards[1];
     console.log('sholes before inserting is ', holes);
-    for (let hole of holes) {
+    for (const hole of holes) {
       hole.playerId = playerId;
     }
-    console.log("holes after instertion is ", holes);
-    // const scorecard = await this.prisma.scorecard.create({
-    //   data: {
-    //     playerId,
-    //     isCompleted,
-    //     courseName,
-    //     holes: {
-    //       createMany: {
-    //         data: {holes, playerId,
-    //       },
-    //     },
-    //     courseLength: holes.length,
-    //   },
-    //   include: {
-    //     holes: true,
-    //   },
-    // });
-    //return scorecard;
+    console.log('holes after instertion is ', holes);
+    const scorecard = await this.prisma.scorecard.create({
+      data: {
+        playerId,
+        isCompleted,
+        courseName,
+        holes: {
+          createMany: {
+            data: holes,
+          },
+        },
+        courseLength: holes.length,
+      },
+      include: {
+        holes: true,
+      },
+    });
+    return scorecard;
   }
 
   async editScorecardById(id: number, dto: ScorecardDto, playerId: number) {
