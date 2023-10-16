@@ -42,7 +42,15 @@ export class ScorecardController {
     @GetUserId('id') playerId: number,
     @Body() dto: ScorecardDto,
   ) {
+    console.log('data inside of backend is: ', dto);
     return this.scorecardService.createScorecard(playerId, dto);
+  }
+
+  @ApiCreatedResponse({ type: ScorecardDto })
+  @Post('/offline')
+  getOfflineData(@GetUserId('id') playerId: number, @Body() dto: ScorecardDto) {
+    console.log('data inside of backend is: ', dto);
+    //return this.scorecardService.createScorecard(playerId, dto);
   }
 
   @ApiOkResponse()
