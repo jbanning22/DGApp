@@ -54,6 +54,11 @@ export class ScorecardService {
     return scorecard;
   }
 
+
+  parseOfflineData(playerId: number, dto: any) {
+    console.log('data being parsed in service is: ', dto);
+  }
+
   async editScorecardById(id: number, dto: ScorecardDto, playerId: number) {
     const scorecard = await this.prisma.scorecard.findUnique({
       where: {

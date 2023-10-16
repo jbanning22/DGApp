@@ -50,6 +50,8 @@ export class ScorecardController {
   @Post('/offline')
   getOfflineData(@GetUserId('id') playerId: number, @Body() dto: any) {
     console.log('data inside of backend is: ', dto);
+    // call the service with the user data
+    this.scorecardService.parseOfflineData(playerId, dto);
     return playerId;
   }
 
