@@ -61,7 +61,7 @@ export class ScorecardService {
       courseName,
       isCompleted,
     } = dto.userData.scorecards[1];
-    console.log('sholes before inserting is ', holes);
+    console.log('holes before inserting is ', holes);
     for (const hole of holes) {
       hole.playerId = playerId;
     }
