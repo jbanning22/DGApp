@@ -55,34 +55,38 @@ export class ScorecardService {
   }
 
   async parseOfflineData(playerId: number, dto: any) {
-    console.log('data being parsed in service is: ', dto);
-    const {
-      scorecardData: holes,
-      courseName,
-      isCompleted,
-    } = dto.userData.scorecards[1];
-    console.log('holes before inserting is ', holes);
-    for (const hole of holes) {
-      hole.playerId = playerId;
-    }
-    console.log('holes after instertion is ', holes);
-    const scorecard = await this.prisma.scorecard.create({
-      data: {
-        playerId,
-        isCompleted,
-        courseName,
-        holes: {
-          createMany: {
-            data: holes,
+    const scorecards = dto.userData.scorecards;
+
+    const createdScorecards = []; // Array to store created scorecards
+
+    for (const scorecardData of scorecards) {
+      const { scorecardData: holes, courseName, isCompleted } = scorecardData;
+
+      for (const hole of holes) {
+        hole.playerId = playerId;
+      }
+
+      const scorecard = await this.prisma.scorecard.create({
+        data: {
+          playerId,
+          isCompleted,
+          courseName,
+          holes: {
+            createMany: {
+              data: holes,
+            },
           },
+          courseLength: holes.length,
         },
-        courseLength: holes.length,
-      },
-      include: {
-        holes: true,
-      },
-    });
-    return scorecard;
+        include: {
+          holes: true,
+        },
+      });
+
+      createdScorecards.push(scorecard); // Push the created scorecard to the array
+    }
+
+    return createdScorecards; // Return the array of created scorecards
   }
 
   async editScorecardById(id: number, dto: ScorecardDto, playerId: number) {
