@@ -56,23 +56,25 @@ export class ScorecardService {
 
   async parseOfflineData(playerId: number, dto: any) {
     console.log('data being parsed in service is: ', dto);
-    const { scorecardData, courseName, isCompleted } = dto.userData.scorecards[0];
-    console.log('scorecard data  in service is: ', scorecardData);
-    // const scorecard = await this.prisma.scorecard.create({
-    //   data: {
-    //     playerId,
-    //     isCompleted: isCompleted,
-    //     ...dto,
-    //     holes: {
-    //       createMany: {
-    //         data: scorecardData,
-    //       },
-    //     },
-    //   },
-    //   include: {
-    //     holes: true,
-    //   },
-    // });
+    const {
+      scorecardData: holes,
+      courseName,
+      isCompleted,
+    } = dto.userData.scorecards[0];
+    // console.log('scorecard data  in service is: ', );
+    const scorecard = await this.prisma.scorecard.create({
+      data: {
+        playerId,
+        isCompleted,
+        courseName,
+        ...dto,
+        holes,
+      },
+      include: {
+        holes: true,
+      },
+    });
+    return scorecard;
   }
 
   async editScorecardById(id: number, dto: ScorecardDto, playerId: number) {
