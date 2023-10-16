@@ -48,7 +48,7 @@ export class ScorecardController {
 
   @ApiCreatedResponse({ type: ScorecardDto })
   @Post('/offline')
-  getOfflineData(@GetUserId('id') playerId: number, @Body() dto: ScorecardDto) {
+  getOfflineData(@GetUserId('id') playerId: number, @Body() dto: any) {
     console.log('data inside of backend is: ', dto);
     return playerId;
   }
