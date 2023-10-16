@@ -60,7 +60,7 @@ export class ScorecardService {
       scorecardData: holes,
       courseName,
       isCompleted,
-    } = dto.userData.scorecards[2];
+    } = dto.userData.scorecards[1];
     console.log('sholes before inserting is ', holes);
     for (let hole of holes) {
       hole.playerId = playerId;
