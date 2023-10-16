@@ -67,8 +67,8 @@ export class ScorecardService {
         playerId,
         isCompleted,
         courseName,
-        ...dto,
         holes,
+        courseLength: holes.length,
       },
       include: {
         holes: true,
