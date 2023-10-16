@@ -63,7 +63,7 @@ export class ScorecardService {
     } = dto.userData.scorecards[0];
     // console.log('scorecard data  in service is: ', );
     for (let hole in holes) {
-      console.log("hole is: ", hole);
+      console.log("hole is: ", hole, holes);
       //hole.playerId = playerId;
     }
     // const scorecard = await this.prisma.scorecard.create({
