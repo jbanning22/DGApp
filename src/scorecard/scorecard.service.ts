@@ -61,11 +61,11 @@ export class ScorecardService {
       courseName,
       isCompleted,
     } = dto.userData.scorecards[0];
-    // console.log('scorecard data  in service is: ', );
-    for (let hole in holes) {
-      console.log("hole is: ", hole, holes);
-      //hole.playerId = playerId;
+    console.log('sholes before inserting is ', holes);
+    for (let hole of holes) {
+      hole.playerId = playerId;
     }
+    console.log("holes after instertion is ", holes);
     // const scorecard = await this.prisma.scorecard.create({
     //   data: {
     //     playerId,
