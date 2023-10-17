@@ -45,6 +45,14 @@ export class MeasureThrowsController {
     return this.measureThrowsService.createMeasuredThrow(userId, dto);
   }
 
+  @ApiCreatedResponse({ type: MeasuredThrowsDto })
+  @Post('/offline')
+  getOfflineData(@GetUserId('id') playerId: number, @Body() dto: any) {
+    console.log('data inside of backend is: ', dto);
+    // this.scorecardService.parseOfflineData(playerId, dto);
+    return playerId;
+  }
+
   @ApiOkResponse()
   @Patch(':id')
   editThrowById(
