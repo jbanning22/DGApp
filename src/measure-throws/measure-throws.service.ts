@@ -34,6 +34,31 @@ export class MeasureThrowsService {
     return measuredThrow;
   }
 
+  async parseOfflineThrowData(userId: number, dto: any) {
+    const throws = dto.userData.throws;
+    const createdThrows = [];
+
+    for (const throwData of throws) {
+      const mappedData: MeasuredThrowsDto = {
+        disc: throwData.disc,
+        throwtype: throwData.throwtype,
+        distance: throwData.distance.toString(),
+        color: throwData.color,
+      };
+
+      const throwRecord = await this.prisma.measuredThrow.create({
+        data: {
+          userId,
+          ...mappedData,
+        },
+      });
+
+      createdThrows.push(throwRecord);
+    }
+
+    return createdThrows;
+  }
+
   async editThrowById(userId: number, throwId: number, dto: EditThrowDto) {
     const measuredThrow = await this.prisma.measuredThrow.findUnique({
       where: {

@@ -57,7 +57,7 @@ export class ScorecardService {
   async parseOfflineData(playerId: number, dto: any) {
     const scorecards = dto.userData.scorecards;
 
-    const createdScorecards = []; // Array to store created scorecards
+    const createdScorecards = [];
 
     for (const scorecardData of scorecards) {
       const { scorecardData: holes, courseName, isCompleted } = scorecardData;
@@ -83,10 +83,10 @@ export class ScorecardService {
         },
       });
 
-      createdScorecards.push(scorecard); // Push the created scorecard to the array
+      createdScorecards.push(scorecard);
     }
 
-    return createdScorecards; // Return the array of created scorecards
+    return createdScorecards;
   }
 
   async editScorecardById(id: number, dto: ScorecardDto, playerId: number) {
