@@ -48,7 +48,7 @@ export class MeasureThrowsController {
   @ApiCreatedResponse({ type: MeasuredThrowsDto })
   @Post('/offline')
   getOfflineData(@GetUserId('id') userId: number, @Body() dto: any) {
-    console.log('data inside of backend is: ', dto);
+    // console.log('data inside of backend is: ', dto);
     return this.measureThrowsService.parseOfflineThrowData(userId, dto);
   }
 

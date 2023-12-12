@@ -8,7 +8,7 @@ export class PrismaService extends PrismaClient {
     super({
       datasources: {
         db: {
-          url: 'postgresql://postgres:NeonDevTech1@34.86.11.189:5432/disc-golf-db?schema=public',
+          url: 'postgresql://postgres:password@discgolf-db.catbyilbmjzp.us-east-1.rds.amazonaws.com:5432/discgolf-db?schema=public',
         },
       },
     });
