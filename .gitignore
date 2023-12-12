@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+#secrets
+.env
+.env.test
 # Logs
 logs
 *.log
